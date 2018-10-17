@@ -168,8 +168,7 @@ export class InnerSlider extends React.Component {
     });
   };
   componentDidUpdate = () => {
-    // this.checkImagesLoad();
-
+    this.checkImagesLoad();
     this.props.onReInit && this.props.onReInit();
     if (this.props.lazyLoad) {
       let slidesToLoad = getOnDemandLazySlides({
@@ -300,9 +299,9 @@ export class InnerSlider extends React.Component {
     let images = document.querySelectorAll(".slick-slide img");
     let imagesCount = images.length,
       loadedCount = 0;
+    const handler = () =>
+      ++loadedCount && loadedCount >= imagesCount && this.onWindowResized();
     Array.prototype.forEach.call(images, image => {
-      const handler = () =>
-        ++loadedCount && loadedCount >= imagesCount && this.onWindowResized();
       if (!image.onclick) {
         image.onclick = () => image.parentNode.focus();
       } else {
